@@ -1,0 +1,25 @@
+﻿@model SQLMVC99.Models.Product
+
+<div class="container mt-4">
+    <h2>Product Details</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Image:</dt>
+        <dd class="col-sm-9">
+            <img src="@Model.Image" class="card-img-top" alt="Product Image" style="height:200px; width: 18rem;">
+        </dd>
+
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Description:</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Price:</dt>
+        <dd class="col-sm-9">@Model.Price</dd>
+    </dl>
+
+
+    <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Back to List</a>
+</div>

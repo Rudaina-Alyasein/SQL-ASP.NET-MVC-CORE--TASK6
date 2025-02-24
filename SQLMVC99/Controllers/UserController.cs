@@ -12,14 +12,12 @@ namespace SQLMVC99.Controllers
             _context = new MyDbContext();
         }
 
-        // Action لعرض قائمة المستخدمين
         public ActionResult Index()
         {
             var users = _context.Users.ToList();
             return View(users);
         }
 
-        // Action لعرض نموذج التعديل
         public ActionResult Edit(int id)
         {
             var user = _context.Users.Find(id);
@@ -30,7 +28,6 @@ namespace SQLMVC99.Controllers
             return View(user);
         }
 
-        // Action لحفظ التعديلات
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, User updatedUser)
@@ -63,7 +60,6 @@ namespace SQLMVC99.Controllers
             return View(updatedUser);
         }
 
-        // Action لعرض نموذج الحذف
         public ActionResult Delete(int id)
         {
             var user = _context.Users.Find(id);
@@ -77,13 +73,12 @@ namespace SQLMVC99.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Action لعرض نموذج إضافة مستخدم جديد
         public ActionResult Create()
         {
-            return View();
+           User newUser = new User();
+            return View(newUser);
         }
 
-        // Action لحفظ بيانات المستخدم الجديد
         [HttpPost]
         public ActionResult Create(User newUser)
         {

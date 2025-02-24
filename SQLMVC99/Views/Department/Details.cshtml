@@ -1,0 +1,22 @@
+﻿@model SQLMVC99.Models.Department
+
+<div class="container mt-4">
+    <h2>Department Details</h2>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Manager:</dt>
+        <dd class="col-sm-9">@Model.Manager</dd>
+
+        <dt class="col-sm-3">Location:</dt>
+        <dd class="col-sm-9">@Model.Location</dd>
+
+        <dt class="col-sm-3">Created Date:</dt>
+        <dd class="col-sm-9">@Model.CreatedDate</dd>
+    </dl>
+
+    <a href="@Url.Action("Index", "Department")" class="btn btn-secondary">Back to List</a>
+</div>

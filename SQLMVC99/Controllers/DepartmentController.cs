@@ -9,84 +9,24 @@ namespace SQLMVC99.Controllers
 
         public DepartmentController()
         {
+            
             _context = new MyDbContext();
         }
 
 
-        // Action لعرض قائمة المستخدمين
         public ActionResult Index()
         {
             var Departments = _context.Departments.ToList();
             return View(Departments);
         }
-
-        // Action لعرض نموذج التعديل
-        public ActionResult Edit(int id)
-        {
-            var department = _context.Departments.Find(id);
-            if (department == null)
-            {
-                return NotFound();
-            }
-            return View(department);
-        }
-
-        // Action لحفظ التعديلات
-        [HttpPost]
-        public ActionResult Edit(int id, Department updatedDepartment)
-        {
-            if (id != updatedDepartment.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(updatedDepartment);
-                    _context.SaveChanges();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception)
-                {
-                    if (!_context.Departments.Any(u => u.Id == id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(updatedDepartment);
-        }
-
-        // Action لعرض نموذج الحذف
-        public ActionResult Delete(int id)
-        {
-            var department = _context.Departments.Find(id);
-            if (department == null)
-            {
-                return NotFound();
-            }
-
-            _context.Departments.Remove(department);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // Action لعرض نموذج إضافة مستخدم جديد
         public ActionResult Create()
         {
-            var newDepartment = new Department(); // Initialize a new empty department
-            return View(newDepartment); // Pass it to the view
+            Department newDepartment = new Department();
+            return View(newDepartment);
         }
 
 
-        // Action لحفظ بيانات المستخدم الجديد
+
         [HttpPost]
         public ActionResult Create(Department newDepartment)
         {
@@ -97,6 +37,62 @@ namespace SQLMVC99.Controllers
                 return RedirectToAction("Index");
             }
             return View(newDepartment);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var department = _context.Departments.Find(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            return View(department);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, Department updatedDepartment)
+        {
+            if (id != updatedDepartment.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                
+                    _context.Update(updatedDepartment);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+              
+               
+                
+                return RedirectToAction(nameof(Index));
+            }
+            return View(updatedDepartment);
+        }
+
+        public ActionResult Delete(int Id)
+        {
+            var department = _context.Departments.Find(Id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+
+            _context.Departments.Remove(department);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        
+        public ActionResult Details(int id)
+        {
+            var department = _context.Departments.Find(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            return View(department);
         }
     }
 }
