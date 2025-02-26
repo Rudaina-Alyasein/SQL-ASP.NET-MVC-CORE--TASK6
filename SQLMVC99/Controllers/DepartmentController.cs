@@ -20,6 +20,7 @@ namespace SQLMVC99.Controllers
             return View(Departments);
         }
         public ActionResult Create()
+          
         {
             Department newDepartment = new Department();
             return View(newDepartment);
@@ -38,6 +39,17 @@ namespace SQLMVC99.Controllers
             }
             return View(newDepartment);
         }
+
+       
+
+
+
+
+
+
+        
+
+
 
         public ActionResult Edit(int id)
         {

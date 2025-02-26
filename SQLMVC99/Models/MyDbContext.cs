@@ -21,6 +21,10 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Usernew> Usernews { get; set; }
+
+    public virtual DbSet<Users1> Users1s { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=DESKTOP-DH1T2CV;Database=Orange;Trusted_Connection=True;TrustServerCertificate=True;");
@@ -86,6 +90,46 @@ public partial class MyDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Usernew>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Usernew__3214EC2792946239");
+
+            entity.ToTable("Usernew");
+
+            entity.HasIndex(e => e.Email, "UQ__Usernew__A9D10534D60C39C1").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Email).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.Role)
+                .HasMaxLength(50)
+                .HasDefaultValue("User");
+        });
+
+        modelBuilder.Entity<Users1>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__users1__3213E83FE28A8820");
+
+            entity.ToTable("users1");
+
+            entity.HasIndex(e => e.Email, "UQ__users1__AB6E616484351C43").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("email");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("name");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("password");
         });
 
         OnModelCreatingPartial(modelBuilder);

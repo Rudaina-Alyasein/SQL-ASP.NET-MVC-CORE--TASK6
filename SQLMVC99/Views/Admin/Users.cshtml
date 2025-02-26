@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "_Layout1";
+}
+
+@model IEnumerable<Usernew>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+<div class="container mt-5">
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- زر إضافة مستخدم -->
+@* <a href="@Url.Action("Create", "Admin")" class="btn btn-primary mb-3">Add New User</a> *@
+    <!-- زر فتح نافذة الـ Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
+        Create User
+    </button>
+    <!-- نافذة Modal لإنشاء المستخدم -->
+    <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createUserModalLabel">Create New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form asp-action="Create" method="post">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="Name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="Name" name="Name" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="Email" name="Email" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="Password" name="Password" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="Role" class="form-label">Role</label>
+                                <select class="form-control" id="Role" name="Role">
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Create User</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>
+                    <!-- زر تعديل المستخدم -->
+                        <a href="@Url.Action("Edit", "Admin", new { id = user.Id })" class="btn btn-warning">Edit</a>
+                         
+                        <!-- زر حذف المستخدم -->
+                    <a href="@Url.Action("Delete", "Admin", new { id = user.Id })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

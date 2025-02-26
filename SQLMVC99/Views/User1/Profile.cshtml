@@ -1,0 +1,87 @@
+﻿
+@model Usernew
+@{
+    var userRole = ViewBag.UserRole;
+
+    if (userRole == "Admin")
+    {
+        Layout = "_Layout1";  
+    }
+    else
+    {
+        Layout = "_Layout";   
+    }
+}
+
+
+
+<div class="container mt-4">
+    <h2>User Profile</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.UserName</h5>
+            <p class="card-text"><strong>Email:</strong> @ViewBag.UserEmail</p>
+            <p class="card-text"><strong>Role:</strong> @ViewBag.UserRole</p>
+
+            <a asp-controller="User1" asp-action="EditProfile" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">Edit</a>
+        </div>
+    </div>
+  
+
+    <!-- مودال لتعديل البيانات -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="EditProfile" method="post">
+                        <div class="form-group">
+                            <label for="Name">Name:</label>
+                            <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email:</label>
+                            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Password:</label>
+                            <input type="password" class="form-control" id="Password" name="Password" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3">
+                        <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    @TempData["SuccessMessage"]
+                                </div>
+                                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successToast = document.getElementById("successToast");
+            if (successToast) {
+                var toast = new bootstrap.Toast(successToast);
+                toast.show();
+            }
+        });
+    </script>
+}
+
